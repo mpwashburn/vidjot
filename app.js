@@ -6,6 +6,8 @@ const express = require ('express');
 
 const app = express();
 
+// How middleware works
+
 // Index Route
 app.get('/', (req, res) => {
   res.send('Index');
