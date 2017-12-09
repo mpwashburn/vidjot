@@ -6,6 +6,7 @@
   "dependencies": {
     "express": "^4.16.2",
     "express-handlebars": "^3.0.0",
+    "mongoose": "^4.13.6",
     "package.json": "^2.0.1"
   },
   "devDependencies": {},
