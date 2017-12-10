@@ -65,6 +65,20 @@ app.get('/ideas/add', (req, res) => {
   res.render('ideas/add');
 });
 
+// Edit Idea Form
+/* Note: following edit is "/:id". This will be the acutal id of each "idea saved" so that we know which one to edit.*/
+app.get('/ideas/edit/:id', (req, res) => {
+  /*req.params.id is matching the _id: in this query with the id that is passed through the url*/
+  Idea.findOne({
+    _id: req.params.id
+  })
+  .then(idea => {
+    res.render('ideas/edit', {
+      idea:idea
+    });
+  });
+});
+
 // Process Idea form
 app.post('/ideas', (req, res) =>{
   // Manually adding validations to the "Add Idea form"
