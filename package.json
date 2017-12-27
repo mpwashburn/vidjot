@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "App to store video ideas",
   "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
@@ -12,7 +15,9 @@
     "express-session": "^1.15.6",
     "method-override": "^2.3.10",
     "mongoose": "^4.13.6",
-    "package.json": "^2.0.1"
+    "package.json": "^2.0.1",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {},
   "scripts": {

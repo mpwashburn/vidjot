@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
+const {ensureAuthenticated} = require('../helpers/auth');
 
 // Load Idea model
 require ('../models/Idea');
@@ -8,8 +9,8 @@ const Idea = mongoose.model('ideas');
 
 
 // Idea Index Page
-router.get('/', (req, res) => {
-  Idea.find({})
+router.get('/', ensureAuthenticated, (req, res) => {
+  Idea.find({user: req.user.id})
     .sort({date:'desc'})
     .then(ideas => {
       res.render('ideas/index', {
@@ -20,26 +21,32 @@ router.get('/', (req, res) => {
 });
 
 // Add Idea Form
-router.get('/add', (req, res) => {
+router.get('/add', ensureAuthenticated, (req, res) => {
   res.render('ideas/add');
 });
 
 // Edit Idea Form
 /* Note: following edit is "/:id". This will be the acutal id of each "idea saved" so that we know which one to edit.*/
-router.get('/edit/:id', (req, res) => {
+router.get('/edit/:id', ensureAuthenticated, (req, res) => {
   /*req.params.id is matching the _id: in this query with the id that is passed through the url*/
   Idea.findOne({
     _id: req.params.id
   })
   .then(idea => {
-    res.render('ideas/edit', {
-      idea:idea
-    });
+    if(idea.user != req.user.id){
+      req.flash('error_msg', 'Not Authorized');
+      res.redirect('/ideas');
+    } else {
+      res.render('ideas/edit', {
+        idea:idea
+      });
+    }
+
   });
 });
 
 // Process Idea form
-router.post('/', (req, res) =>{
+router.post('/', ensureAuthenticated, (req, res) =>{
   // Manually adding validations to the "Add Idea form"
 
   /*  create an errors variable with an empty array. This array will collect errors when form fields are not filled in.*/
@@ -62,7 +69,8 @@ router.post('/', (req, res) =>{
   } else {
     const newUser = {
       title: req.body.title,
-      details: req.body.details
+      details: req.body.details,
+      user: req.user.id
     }
     new Idea(newUser)
       .save()
@@ -74,7 +82,7 @@ router.post('/', (req, res) =>{
 });
 
 // Edit Form Process
-router.put('/:id', (req, res) =>{
+router.put('/:id', ensureAuthenticated, (req, res) =>{
   Idea.findOne({
     _id: req.params.id
   })
@@ -92,7 +100,7 @@ router.put('/:id', (req, res) =>{
 });
 
 // Delete Idea
-router.delete('/:id', (req, res) => {
+router.delete('/:id', ensureAuthenticated, (req, res) => {
   Idea.remove({_id: req.params.id})
   .then(() => {
     req.flash('success_msg', 'Video Idea removed');
