@@ -3,12 +3,15 @@
 // Here we are importing modules that we have installed
 
 const express = require ('express');
+const path = require ('path');
 const exphbs = require ('express-handlebars');
 const methodOverride = require('method-override');
 const flash = require ('connect-flash');
 const session = require ('express-session');
 const bodyParser = require ('body-parser');
 const mongoose = require ('mongoose');
+// const passport = require ('passport');
+const bcrypt = require ('bcryptjs');
 
 const app = express();
 
@@ -34,6 +37,9 @@ app.set('view engine', 'handlebars');
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+// Static folder
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Method-Override middleware
 app.use(methodOverride('_method'));
