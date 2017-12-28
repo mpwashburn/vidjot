@@ -1,17 +1,12 @@
-//app.js is the entry point for application. Index.js is also used
-
-// Here we are importing modules that we have installed
-
-const express = require ('express');
-const path = require ('path');
-const exphbs = require ('express-handlebars');
+const express = require('express');
+const path = require('path');
+const exphbs  = require('express-handlebars');
 const methodOverride = require('method-override');
-const flash = require ('connect-flash');
-const session = require ('express-session');
-const bodyParser = require ('body-parser');
-const passport = require ('passport');
-const mongoose = require ('mongoose');
-const bcrypt = require ('bcryptjs');
+const flash = require('connect-flash');
+const session = require('express-session');
+const bodyParser = require('body-parser');
+const passport = require('passport');
+const mongoose = require('mongoose');
 
 const app = express();
 
@@ -21,23 +16,22 @@ const users = require('./routes/users');
 
 // Passport Config
 require('./config/passport')(passport);
-
 // DB Config
 const db = require('./config/database');
 
 // Map global promise - gets rid of warning
 mongoose.Promise = global.Promise;
-
 // Connect to mongoose
 mongoose.connect(db.mongoURI, {
   useMongoClient: true
 })
-.then(() => console.log('MongoDB Connected...')) //this catches a promise
-.catch(err => console.log(err));
-
+  .then(() => console.log('MongoDB Connected...'))
+  .catch(err => console.log(err));
 
 // Handlebars middleware
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.engine('handlebars', exphbs({
+  defaultLayout: 'main'
+}));
 app.set('view engine', 'handlebars');
 
 // Body parser middleware
@@ -72,11 +66,9 @@ app.use(function(req, res, next) {
   next();
 });
 
-
 // Index Route
 app.get('/', (req, res) => {
-  //passing in dynamic data
-  const title = "Let's get this party started!";
+  const title = "Vidjot App";   //passing in dynamic data
   res.render('index', {
     title: title
   });
@@ -88,7 +80,6 @@ app.get('/about', (req, res) => {
 });
 
 // Use Routes
-
 // What this says: Anything that uses the path '/ideas' is going to pertain to the directory 'ideas'
 app.use('/ideas', ideas);
 app.use('/users', users);

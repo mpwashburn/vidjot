@@ -3,10 +3,9 @@ const mongoose = require('mongoose');
 const router = express.Router();
 const {ensureAuthenticated} = require('../helpers/auth');
 
-// Load Idea model
+// Load Idea Model
 require('../models/Idea');
 const Idea = mongoose.model('ideas');
-
 
 // Idea Index Page
 router.get('/', ensureAuthenticated, (req, res) => {
@@ -15,9 +14,8 @@ router.get('/', ensureAuthenticated, (req, res) => {
     .then(ideas => {
       res.render('ideas/index', {
         ideas:ideas
-      })
-
-    })
+      });
+    });
 });
 
 // Add Idea Form

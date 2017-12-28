@@ -1,9 +1,7 @@
-const mongoose = require ('mongoose');
-
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-// create Schema
-
+// Create Schema
 const IdeaSchema = new Schema({
   title:{
     type: String,
@@ -13,12 +11,12 @@ const IdeaSchema = new Schema({
     type: String,
     required: true
   },
-  user: {
+  user:{
     type: String,
-    required: true
+    required:true
   },
   date: {
-    type:Date,
+    type: Date,
     default: Date.now
   }
 });
