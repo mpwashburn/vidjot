@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "description": "App to store video ideas",
   "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "Michael Washburn",
+  "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
@@ -17,15 +22,10 @@
     "passport-local": "^1.0.0"
   },
   "devDependencies": {},
-  "scripts": {
-    "start": "node app.js"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mpwashburn/vidjot.git"
   },
-  "author": "Michael Washburn",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/mpwashburn/vidjot/issues"
   },
